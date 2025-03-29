@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Docker .NET Debug",
+            "type": "coreclr",
+            "request": "attach",
+            "processName": "dotnet",
+            //"processId": "${command:pickRemoteProcess}",
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": ["exec", "-i", "dockerdebugapp"],
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceFolder}/DockerDebugApp",
+                "quoteArgs": false
+            },
+            "sourceFileMap": {
+                "/src": "${workspaceFolder}/DockerDebugApp"
+            },
+            "justMyCode": true,
+            "requireExactSource": false,
+            "preLaunchTask": "docker-debug-setup"
+        }
+    ]
+}
