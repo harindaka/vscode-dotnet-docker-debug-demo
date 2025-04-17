@@ -2,21 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/DockerDebugApp/DockerDebugApp.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
             "label": "docker-build",
             "type": "shell",
-            "command": "docker build --no-cache -t dockerdebugapp .",
+            "command": "docker build --no-cache --build-arg REL_PROJECT_PATH=./DockerDebugApp -t dockerdebugapp .",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
