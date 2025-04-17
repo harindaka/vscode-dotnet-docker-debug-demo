@@ -2,16 +2,16 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
 # Install the vsdbg debugger and create startup hook
 WORKDIR /startuphooks
-COPY ["./StartupHooks/StartupHooks.csproj", "./"]
-RUN dotnet restore "StartupHooks.csproj"
+COPY ["./StartupHooks/*.csproj", "./"]
+RUN dotnet restore
 COPY ./StartupHooks .
-RUN dotnet build "StartupHooks.csproj" -c Debug -o /startuphooks/build
+RUN dotnet build -c Debug -o /startuphooks/build
 
 WORKDIR /src
-COPY ["./DockerDebugApp/DockerDebugApp.csproj", "./"]
-RUN dotnet restore "DockerDebugApp.csproj"
+COPY ["./DockerDebugApp/*.csproj", "./"]
+RUN dotnet restore
 COPY ./DockerDebugApp .
-RUN dotnet build "DockerDebugApp.csproj" -c Debug -o /app/build
+RUN dotnet build -c Debug -o /app/build
 
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
