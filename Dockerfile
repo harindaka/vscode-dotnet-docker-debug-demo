@@ -21,7 +21,7 @@ COPY --from=build /startuphooks/bin/docker-debug .
 ENV DOTNET_STARTUP_HOOKS=/startuphooks/StartupHooks.dll
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends unzip procps curl \
+    && apt-get install -y --no-install-recommends unzip curl \
     && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
 
 WORKDIR /app
