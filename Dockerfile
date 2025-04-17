@@ -10,7 +10,7 @@ RUN dotnet build "StartupHooks.csproj" -c Debug -o /startuphooks/build
 WORKDIR /src
 COPY ["./DockerDebugApp/DockerDebugApp.csproj", "./"]
 RUN dotnet restore "DockerDebugApp.csproj"
-COPY . .
+COPY ./DockerDebugApp .
 RUN dotnet build "DockerDebugApp.csproj" -c Debug -o /app/build
 
 
