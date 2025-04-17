@@ -16,9 +16,9 @@
         {
             "label": "docker-build",
             "type": "shell",
-            "command": "docker build -t dockerdebugapp .",
+            "command": "docker build --no-cache -t dockerdebugapp .",
             "options": {
-                "cwd": "${workspaceFolder}/DockerDebugApp"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": []
         },
@@ -27,7 +27,7 @@
             "type": "shell",
             "command": "docker run --name dockerdebugapp -d --rm dockerdebugapp",
             "options": {
-                "cwd": "${workspaceFolder}/DockerDebugApp"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [],
             "dependsOn": ["docker-build"]
@@ -35,7 +35,7 @@
         {
             "label": "docker-stop",
             "type": "shell",
-            "command": "docker stop dockerdebugapp || true",
+            "command": "docker stop dockerdebugapp || exit 0",
             "presentation": {
               "reveal": "always",
               "panel": "shared"

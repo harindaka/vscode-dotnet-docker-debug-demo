@@ -1,2 +1,9 @@
-*
-!../Docker/StartupHooks/
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/Dockerfile*
+**/*.user
