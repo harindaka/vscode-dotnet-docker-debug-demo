@@ -5,18 +5,18 @@ WORKDIR /startuphooks
 COPY ["./StartupHooks/*.csproj", "./"]
 RUN dotnet restore
 COPY ./StartupHooks .
-RUN dotnet build -c Debug -o /startuphooks/build
+RUN dotnet build -c Debug -o /startuphooks/bin/docker-debug
 
 WORKDIR /src
 COPY ["./DockerDebugApp/*.csproj", "./"]
 RUN dotnet restore
 COPY ./DockerDebugApp .
-RUN dotnet build -c Debug -o /app/build
+RUN dotnet build -c Debug -o /src/bin/docker-debug
 
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /startuphooks
-COPY --from=build /startuphooks/build .
+COPY --from=build /startuphooks/bin/docker-debug .
 
 ENV DOTNET_STARTUP_HOOKS=/startuphooks/StartupHooks.dll
 
@@ -25,6 +25,6 @@ RUN apt-get update \
     && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
 
 WORKDIR /app
-COPY --from=build /app/build .
+COPY --from=build /src/bin/docker-debug .
 
 ENTRYPOINT ["dotnet", "DockerDebugApp.dll"]
