@@ -4,7 +4,7 @@
         {
             "label": "docker-build",
             "type": "shell",
-            "command": "docker build --build-arg REL_PROJECT_PATH=./DockerDebugApp --build-arg ENTRYPOINT_ASSEMBLY=DockerDebugApp.dll -t dockerdebugapp .",
+            "command": "docker build --build-arg REL_PROJECT_PATH=./DockerDebugApp -t dockerdebugapp .",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
