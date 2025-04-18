@@ -2,38 +2,29 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "docker-build",
+            "label": "docker-debug-app-build",
             "type": "shell",
-            "command": "docker build --build-arg REL_PROJECT_PATH=./DockerDebugApp -t dockerdebugapp .",
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "docker-run",
-            "type": "shell",
-            "command": "docker run --name dockerdebugapp -d --rm dockerdebugapp",
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
+            "command": "${workspaceFolder}/.vscode/docker-build.bat",
+            "args": [
+              "${workspaceFolder}", // Docker context directory path
+              "./DockerDebugApp", // Project path relative to the docker context directory
+              "dockerdebugapp-image"
+            ],
             "problemMatcher": [],
-            "dependsOn": ["docker-build"]
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
-            "label": "docker-stop",
+            "label": "docker-debug-app-pre-launch",
             "type": "shell",
-            "command": "docker stop dockerdebugapp || exit 0",
-            "presentation": {
-              "reveal": "always",
-              "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "docker-debug-setup",
-            "dependsOrder": "sequence",
-            "dependsOn": ["docker-stop","docker-run"],
+            "command": "${workspaceFolder}/.vscode/docker-run-debug.bat",
+            "dependsOn": ["docker-debug-app-build"],
+            "args": [
+              "dockerdebugapp-image", // Docker image name
+              "dockerdebugapp-container" // Docker container name
+            ],
             "problemMatcher": []
         }
     ]
