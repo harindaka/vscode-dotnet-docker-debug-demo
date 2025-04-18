@@ -35,7 +35,7 @@
         {
             "label": "docker-debug-app-pre-launch",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/docker-run-debug.bat",
+            "command": "${workspaceFolder}/.vscode/debugger-run.bat",
             "dependsOrder": "sequence",
             "dependsOn": ["solution-build", "debugger-build"],
             "args": [
