@@ -22,13 +22,14 @@
             "command": "${workspaceFolder}/.vscode/debugger-build.bat",
             "args": [
               "${workspaceFolder}/.vscode/debugger-dockerfile", // Path to the Dockerfile used to build the debugger image
-              "${workspaceFolder}/StartupHooks", // StartupHooks project / docker context directory path              
+              "${workspaceFolder}/StartupHooks", // StartupHooks project / docker context directory path
+              "mcr.microsoft.com/dotnet/aspnet:9.0", // Base image used to do the build the debugger image
+              "mcr.microsoft.com/dotnet/sdk:9.0", // SDK image used to do the build the startup hooks project
               "debugger-image" // Name of the debugger image
             ],
             "problemMatcher": [],
             "group": {
-                "kind": "build",
-                "isDefault": true
+                "kind": "build"
             }
         },
         {

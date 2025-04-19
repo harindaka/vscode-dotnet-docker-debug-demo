@@ -1,18 +1,23 @@
 # Install the vsdbg debugger early to leverage caching
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS debugger
+ARG ARG_DEBUGGER_BASE_IMAGE
+ARG ARG_STARTUP_HOOKS_BUILD_IMAGE
+
+
+FROM ${ARG_DEBUGGER_BASE_IMAGE} AS debugger
 RUN apt-get update \
     && apt-get install -y --no-install-recommends unzip curl \
     && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
 
 
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS startuphooks-build
+FROM ${ARG_STARTUP_HOOKS_BUILD_IMAGE} AS startuphooks-build
 WORKDIR /startuphooks
 COPY ["./*.csproj", "./"]
 RUN dotnet restore
 COPY . .
 RUN dotnet build -c Debug -o /startuphooks/build -p:AssemblyName=StartupHooks
 
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+
+FROM ${ARG_DEBUGGER_BASE_IMAGE} AS final
 COPY --from=debugger /vsdbg /vsdbg
 
 ENV DOTNET_STARTUP_HOOKS=/startuphooks/StartupHooks.dll
@@ -21,6 +26,6 @@ COPY --from=startuphooks-build /startuphooks/build .
 
 WORKDIR /src
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
 # This is intended to be overridden
-# ENTRYPOINT ["echo", "No assembly specified to debug"]
+ENTRYPOINT ["echo", "No assembly specified to debug"]
