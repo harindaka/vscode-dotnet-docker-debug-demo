@@ -12,7 +12,7 @@
                 "pipeProgram": "docker",
                 "pipeArgs": ["exec", "-i", "console-app-container"],
                 "debuggerPath": "/vsdbg/vsdbg",
-                "pipeCwd": "${workspaceFolder}/DockerDebugApp",
+                "pipeCwd": "${workspaceFolder}/ConsoleApp",
                 "quoteArgs": false
             },
             "sourceFileMap": {
