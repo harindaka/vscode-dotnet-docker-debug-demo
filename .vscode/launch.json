@@ -16,7 +16,7 @@
                 "quoteArgs": false
             },
             "sourceFileMap": {
-                "/src": "${workspaceFolder}/DockerDebugApp"
+                "/src": "${workspaceFolder}"
             },
             "justMyCode": true,
             "requireExactSource": false
