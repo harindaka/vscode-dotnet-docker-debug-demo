@@ -17,9 +17,9 @@
             }
         },
         {
-            "label": "debugger-build",
+            "label": "docker-debug-app-debugger-build",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/solution-build.bat",
+            "command": "${workspaceFolder}/.vscode/debugger-build.bat",
             "args": [
               "${workspaceFolder}/StartupHooks", // StartupHooks project / docker context directory path
               "./DockerDebugApp/bin/Debug/net9.0/DockerDebugApp.dll", // Path to entrypoint assembly relative to the solution directory
@@ -33,11 +33,11 @@
             }
         },
         {
-            "label": "docker-debug-app-pre-launch",
+            "label": "docker-debug-app-debug-setup",
             "type": "shell",
             "command": "${workspaceFolder}/.vscode/debugger-run.bat",
             "dependsOrder": "sequence",
-            "dependsOn": ["solution-build", "debugger-build"],
+            "dependsOn": ["solution-build", "docker-debug-app-debugger-build"],
             "args": [
               "${workspaceFolder}", // Solution / docker context directory path              
               "docker-debug-app-image", // Name of the debugger image prepared by installing the debugger and startup hook
