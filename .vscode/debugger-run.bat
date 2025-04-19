@@ -1,7 +1,8 @@
 
 set SOLUTION_PATH=%1
-set IMAGE_NAME=%3
-set CONTAINER_NAME=%4
+set REL_ASSEMBLY_PATH=%2
+set DEBUGGER_IMAGE_NAME=%3
+set DEBUGGER_CONTAINER_NAME=%4
 
-docker stop "%CONTAINER_NAME%"
-docker run --name "%CONTAINER_NAME%" -d --rm -v "%SOLUTION_PATH%":/app "%IMAGE_NAME%"
+docker stop "%DEBUGGER_CONTAINER_NAME%"
+docker run --name "%DEBUGGER_CONTAINER_NAME%" -d --rm -v "%SOLUTION_PATH%":/src --entrypoint "dotnet" "%DEBUGGER_IMAGE_NAME%" %REL_ASSEMBLY_PATH%"

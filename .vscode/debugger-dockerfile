@@ -13,13 +13,14 @@ COPY . .
 RUN dotnet build -c Debug -o /startuphooks/build -p:AssemblyName=StartupHooks
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
-ARG ARG_ENTRYPOINT_ASSEMBLY=DockerDebugApp.dll
 COPY --from=debugger /vsdbg /vsdbg
 
 ENV DOTNET_STARTUP_HOOKS=/startuphooks/StartupHooks.dll
 WORKDIR /startuphooks
 COPY --from=startuphooks-build /startuphooks/build .
 
-ENV ENTRYPOINT_ASSEMBLY=${ARG_ENTRYPOINT_ASSEMBLY}
-WORKDIR /app
-ENTRYPOINT dotnet ${ENTRYPOINT_ASSEMBLY}
+WORKDIR /src
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+# This is intended to be overridden
+# ENTRYPOINT ["echo", "No assembly specified to debug"]

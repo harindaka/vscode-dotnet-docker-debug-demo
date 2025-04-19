@@ -6,11 +6,11 @@
             "type": "coreclr",
             "request": "attach",
             "processName": "dotnet",
-            "preLaunchTask": "docker-debug-app-pre-launch",
+            "preLaunchTask": "docker-debug-app-debugger-run",
             //"processId": "${command:pickRemoteProcess}",
             "pipeTransport": {
                 "pipeProgram": "docker",
-                "pipeArgs": ["exec", "-i", "dockerdebugapp-container"],
+                "pipeArgs": ["exec", "-i", "docker-debug-app-container"],
                 "debuggerPath": "/vsdbg/vsdbg",
                 "pipeCwd": "${workspaceFolder}/DockerDebugApp",
                 "quoteArgs": false
