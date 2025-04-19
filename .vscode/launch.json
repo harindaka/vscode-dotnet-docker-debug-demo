@@ -2,15 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Docker Debug DockerDebugApp",
+            "name": "Debug ConsoleApp",
             "type": "coreclr",
             "request": "attach",
             "processName": "dotnet",
-            "preLaunchTask": "docker-debug-app-debugger-run",
+            "preLaunchTask": "console-app-debugger-run",
             //"processId": "${command:pickRemoteProcess}",
             "pipeTransport": {
                 "pipeProgram": "docker",
-                "pipeArgs": ["exec", "-i", "docker-debug-app-container"],
+                "pipeArgs": ["exec", "-i", "console-app-container"],
                 "debuggerPath": "/vsdbg/vsdbg",
                 "pipeCwd": "${workspaceFolder}/DockerDebugApp",
                 "quoteArgs": false
