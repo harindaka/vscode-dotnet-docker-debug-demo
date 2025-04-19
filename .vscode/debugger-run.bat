@@ -9,4 +9,4 @@ docker run --name "%DEBUGGER_CONTAINER_NAME%" ^
     -d --rm ^
     -v "%SOLUTION_PATH%":/src ^
     --entrypoint "dotnet" "%DEBUGGER_IMAGE_NAME%" ^
-    %REL_ASSEMBLY_PATH%"
+    %REL_ASSEMBLY_PATH%

@@ -6,13 +6,31 @@
             "type": "coreclr",
             "request": "attach",
             "processName": "dotnet",
-            "preLaunchTask": "console-app-debugger-run",
-            //"processId": "${command:pickRemoteProcess}",
+            "preLaunchTask": "console-app-debugger-run",            
             "pipeTransport": {
                 "pipeProgram": "docker",
                 "pipeArgs": ["exec", "-i", "console-app-container"],
                 "debuggerPath": "/vsdbg/vsdbg",
                 "pipeCwd": "${workspaceFolder}/ConsoleApp",
+                "quoteArgs": false
+            },
+            "sourceFileMap": {
+                "/src": "${workspaceFolder}"
+            },
+            "justMyCode": true,
+            "requireExactSource": false
+        },
+        {
+            "name": "Debug UnitTests",
+            "type": "coreclr",
+            "request": "attach",
+            "processName": "dotnet",
+            "preLaunchTask": "unit-tests-debugger-run",
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": ["exec", "-i", "unit-tests-container"],
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceFolder}/UnitTests",
                 "quoteArgs": false
             },
             "sourceFileMap": {

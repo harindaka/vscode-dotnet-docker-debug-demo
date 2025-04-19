@@ -23,8 +23,23 @@
               "${workspaceFolder}/.vscode/debugger-dockerfile", // Path to the Dockerfile used to build the debugger image
               "${workspaceFolder}/StartupHooks", // StartupHooks project / docker context directory path
               "mcr.microsoft.com/dotnet/runtime:9.0", // Base image used to do the build the debugger image
-              "mcr.microsoft.com/dotnet/sdk:9.0", // SDK image used to do the build the startup hooks project
+              "mcr.microsoft.com/dotnet/sdk:9.0", // SDK image used to build the startup hooks project
               "console-debugger-image" // Name of the debugger image
+            ],            
+            "group": {
+                "kind": "build"
+            }
+        },
+        {
+            "label": "sdk-debugger-build",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/debugger-build.bat",
+            "args": [
+              "${workspaceFolder}/.vscode/debugger-dockerfile", // Path to the Dockerfile used to build the debugger image
+              "${workspaceFolder}/StartupHooks", // StartupHooks project / docker context directory path
+              "mcr.microsoft.com/dotnet/sdk:9.0", // Base image used to do the build the debugger image
+              "mcr.microsoft.com/dotnet/sdk:9.0", // SDK image used to build the startup hooks project
+              "sdk-debugger-image" // Name of the debugger image
             ],            
             "group": {
                 "kind": "build"
@@ -38,9 +53,22 @@
             "dependsOn": ["solution-build", "console-debugger-build"],
             "args": [
               "${workspaceFolder}", // Solution / docker context directory path
-              "./DockerDebugApp/bin/Debug/net9.0/DockerDebugApp.dll", // Path to entrypoint assembly relative to the solution directory              
+              "./ConsoleApp/bin/Debug/net9.0/ConsoleApp.dll", // Path to entrypoint assembly relative to the solution directory              
               "console-debugger-image", // Name of the debugger image prepared by installing the debugger and startup hook
               "console-app-container" // Name of app container created from the aforementioned debugger image
+            ]
+        },
+        {
+            "label": "unit-tests-debugger-run",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/debugger-run.bat",
+            "dependsOrder": "sequence",
+            "dependsOn": ["solution-build", "sdk-debugger-build"],
+            "args": [
+              "${workspaceFolder}", // Solution / docker context directory path
+              "test ./UnitTests/bin/Debug/net9.0/UnitTests.dll --filter 'FullyQualifiedName~UnitTests.UnitTest1.TestMethod1'", // Arguments to pass to the test runner              
+              "sdk-debugger-image", // Name of the debugger image prepared by installing the debugger and startup hook
+              "unit-tests-container" // Name of app container created from the aforementioned debugger image
             ]
         }
     ]
