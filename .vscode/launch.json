@@ -24,7 +24,7 @@
             "name": "Debug UnitTests",
             "type": "coreclr",
             "request": "attach",
-            "processName": "dotnet",
+            "processId": "${command:pickRemoteProcess}",
             "preLaunchTask": "unit-tests-debugger-run",
             "pipeTransport": {
                 "pipeProgram": "docker",

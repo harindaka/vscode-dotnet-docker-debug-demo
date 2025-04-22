@@ -53,9 +53,9 @@
             "dependsOn": ["solution-build", "console-debugger-build"],
             "args": [
               "${workspaceFolder}", // Solution / docker context directory path
-              "./ConsoleApp/bin/Debug/net9.0/ConsoleApp.dll", // Path to entrypoint assembly relative to the solution directory              
               "console-debugger-image", // Name of the debugger image prepared by installing the debugger and startup hook
-              "console-app-container" // Name of app container created from the aforementioned debugger image
+              "console-app-container", // Name of app container created from the aforementioned debugger image
+              "./ConsoleApp/bin/Debug/net9.0/ConsoleApp.dll" // Path to entrypoint assembly relative to the solution directory              
             ]
         },
         {
@@ -65,11 +65,23 @@
             "dependsOrder": "sequence",
             "dependsOn": ["solution-build", "sdk-debugger-build"],
             "args": [
-              "${workspaceFolder}", // Solution / docker context directory path
-              "test ./UnitTests/bin/Debug/net9.0/UnitTests.dll --filter 'FullyQualifiedName~UnitTests.UnitTest1.TestMethod1'", // Arguments to pass to the test runner              
+              "${workspaceFolder}", // Solution / docker context directory path                            
               "sdk-debugger-image", // Name of the debugger image prepared by installing the debugger and startup hook
-              "unit-tests-container" // Name of app container created from the aforementioned debugger image
+              "unit-tests-container", // Name of app container created from the aforementioned debugger image
+              "test", // Command used to run the tests in conjuction with the dotnet command
+              "--logger:\"console;verbosity=detailed\"", // Logger used to display test results in the console"
+              "./UnitTests/bin/Debug/net9.0/UnitTests.dll", //Unit test assembly
+              "--filter", // Filter tests
+              "${input:testMethod}" // Prompt user for a specific test method
             ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "testMethod",
+            "type": "promptString",
+            "description": "Enter the unit test filter. e.g. the name of the test method to run",
+            "default": "TestMethod1"
         }
     ]
 }
