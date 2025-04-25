@@ -53,6 +53,6 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 
-.debugger/pid/pid.txt
+.docker/pid/pid.txt
 .docker/nuget/packages/*
 !.docker/nuget/packages/.gitkeep

@@ -4,7 +4,7 @@
         {
             "label": "solution-build",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/solution-build.bat",
+            "command": "${workspaceFolder}/.docker/solution-build.bat",
             "args": [
               "${workspaceFolder}", // Solution / docker context directory path
               "mcr.microsoft.com/dotnet/sdk:9.0", // SDK image used to do the build
@@ -18,9 +18,9 @@
         {
             "label": "console-debugger-build",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/debugger-build.bat",
+            "command": "${workspaceFolder}/.docker/debugger-build.bat",
             "args": [
-              "${workspaceFolder}/.vscode/debugger-dockerfile", // Path to the Dockerfile used to build the debugger image
+              "${workspaceFolder}/.docker/debugger-dockerfile", // Path to the Dockerfile used to build the debugger image
               "${workspaceFolder}/StartupHooks", // StartupHooks project / docker context directory path
               "mcr.microsoft.com/dotnet/runtime:9.0", // Base image used to do the build the debugger image
               "mcr.microsoft.com/dotnet/sdk:9.0", // SDK image used to build the startup hooks project
@@ -33,9 +33,9 @@
         {
             "label": "sdk-debugger-build",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/debugger-build.bat",
+            "command": "${workspaceFolder}/.docker/debugger-build.bat",
             "args": [
-              "${workspaceFolder}/.vscode/debugger-dockerfile", // Path to the Dockerfile used to build the debugger image
+              "${workspaceFolder}/.docker/debugger-dockerfile", // Path to the Dockerfile used to build the debugger image
               "${workspaceFolder}/StartupHooks", // StartupHooks project / docker context directory path
               "mcr.microsoft.com/dotnet/sdk:9.0", // Base image used to do the build the debugger image
               "mcr.microsoft.com/dotnet/sdk:9.0", // SDK image used to build the startup hooks project
@@ -48,7 +48,7 @@
         {
             "label": "console-app-debugger-run",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/debugger-run.bat",
+            "command": "${workspaceFolder}/.docker/debugger-run.bat",
             "dependsOrder": "sequence",
             "dependsOn": ["solution-build", "console-debugger-build"],
             "args": [
@@ -61,7 +61,7 @@
         {
             "label": "unit-tests-debugger-run",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/debugger-run.bat",
+            "command": "${workspaceFolder}/.docker/debugger-run.bat",
             "dependsOrder": "sequence",
             "dependsOn": ["solution-build", "sdk-debugger-build"],
             "args": [

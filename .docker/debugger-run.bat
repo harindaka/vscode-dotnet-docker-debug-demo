@@ -4,7 +4,7 @@ set SOLUTION_PATH=%1
 set DEBUGGER_IMAGE_NAME=%2
 set DEBUGGER_CONTAINER_NAME=%3
 
-set "PID_PATH=%SOLUTION_PATH%\.debugger\pid"
+set "PID_PATH=%SOLUTION_PATH%\.docker\pid"
 set "PID_FILE_PATH=%PID_PATH%\pid.txt"
 
 setlocal enabledelayedexpansion
