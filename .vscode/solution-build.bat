@@ -1,9 +1,10 @@
+@echo off
 
 set SOLUTION_PATH=%1
 set IMAGE_NAME=%2
 set CONTAINER_NAME=%3
 
-docker stop "%CONTAINER_NAME%"
+docker stop "%CONTAINER_NAME%" >nul 2>&1
 docker run --name "%CONTAINER_NAME%" ^
     -it --rm ^
     -v "%SOLUTION_PATH%":/src ^

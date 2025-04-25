@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Reflection;
+using System.IO;
+using System.Threading.Tasks;
 
 public static class StartupHook
 {
@@ -14,6 +16,8 @@ public static class StartupHook
     }
 
     private sealed record EntryAssemblyInfo(EntryAssemblyType Type, int ProcessId, string AssemblyName);
+
+    private const string ProcessIdFilePath = "/pid/pid.txt";
     
     public static void Initialize()
     {
@@ -33,6 +37,9 @@ public static class StartupHook
             Console.WriteLine($"[StartupHook] Skipping Entry Assembly: {entryAssemblyInfo.AssemblyName}, Process: {entryAssemblyInfo.ProcessId}.");
             return;
         }
+
+        WritePidToFile(entryAssemblyInfo.ProcessId, ProcessIdFilePath);
+        Console.WriteLine($"[StartupHook] Process id {entryAssemblyInfo.ProcessId} was written to: {ProcessIdFilePath}");
         
         Console.WriteLine($"[StartupHook][{entryAssemblyInfo.AssemblyName}]: Waiting for debugger to attach...");
 
@@ -75,5 +82,16 @@ public static class StartupHook
         };
 
         return new EntryAssemblyInfo(assemblyType, pid, entryAssemblyName);
+    }
+
+    private static void WritePidToFile(int pid, string filePath)
+    {
+        string directory = Path.GetDirectoryName(filePath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        File.WriteAllText(ProcessIdFilePath, pid.ToString());
     }
 }

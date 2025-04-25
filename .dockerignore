@@ -7,3 +7,4 @@
 **/obj
 **/Dockerfile*
 **/*.user
+**/.debugger
