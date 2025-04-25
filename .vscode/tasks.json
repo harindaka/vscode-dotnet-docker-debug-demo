@@ -56,7 +56,11 @@
               "console-debugger-image", // Name of the debugger image prepared by installing the debugger and startup hook
               "console-app-container", // Name of app container created from the aforementioned debugger image
               "./ConsoleApp/bin/Debug/net9.0/ConsoleApp.dll" // Path to entrypoint assembly relative to the solution directory              
-            ]
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated" // Ensures this task gets its own terminal
+            }
         },
         {
             "label": "unit-tests-debugger-run",
@@ -73,7 +77,11 @@
               "./UnitTests/bin/Debug/net9.0/UnitTests.dll", //Unit test assembly
               "--filter", // Filter tests
               "${input:testMethod}" // Prompt user for a specific test method
-            ]
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated" // Ensures this task gets its own terminal
+            }
         }
     ],
     "inputs": [

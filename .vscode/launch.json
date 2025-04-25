@@ -1,5 +1,11 @@
 {
     "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Debug All",
+            "configurations": ["Debug ConsoleApp", "Debug UnitTests"]
+        }
+    ],
     "configurations": [
         {
             "name": "Debug ConsoleApp",
