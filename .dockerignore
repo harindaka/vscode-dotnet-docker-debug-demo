@@ -8,3 +8,4 @@
 **/Dockerfile*
 **/*.user
 **/.debugger
+**/.docker
