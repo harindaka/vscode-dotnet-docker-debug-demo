@@ -1,6 +1,6 @@
-# Dotnet Docker Debug Demo
+# Debugging Dotnet Projects using VS Code and Docker
 
-This repository demonstrates how to debug .NET applications in VS Code using docker containers with the help of the .Net startup hooks feature.
+This repository demonstrates how to debug .NET applications in VS Code using docker containers with the help of the .Net startup hooks feature. However this demo does not make use of the VS Code dev containers feature.
 
 ## Project Structure
 
