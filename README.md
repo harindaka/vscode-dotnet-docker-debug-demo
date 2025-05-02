@@ -33,7 +33,7 @@ This repository demonstrates how to debug .NET applications in VS Code using doc
 ### Prerequisites
 
 - [Docker](https://www.docker.com/)
-- [Visual Studio Code](https://code.visualstudio.com/) (optional, for development)
+- [Visual Studio Code](https://code.visualstudio.com/)
 
 ### Building the Solution
 
@@ -58,10 +58,25 @@ To debug unit tests:
 2. Select the `Debug UnitTests` configuration from the dropdown menu.
 3. Click the green play button to start debugging the unit tests.
 
+### Concurrent Debugging
+
+To debug both the Console App and Unit Tests projects at the same time:
+
+1. Open the `Run and Debug` view in Visual Studio Code (`Ctrl+Shift+D` on Windows).
+2. Select the `Debug All` configuration from the dropdown menu.
+3. Click the green play button to start debugging both projects.
+
 ## How It Works
 
-1. **Startup Hook**: The `StartupHook` class in `StartupHooks/StartupHook.cs` initializes when the application starts. It identifies the entry assembly, writes the process ID to a file, and waits for a debugger to attach. A background thread monitors debugger detachment and shuts down the application if the debugger is detached.
-2. **Process Selection for Debugging**: For the typical console app or asp.net projects, there will only be one process with the name `dotnet` inside the container. Thus VS Code will identify this process to attach the debugger using the `"processName": "dotnet"` setting specified in the launch configuration. However for unit tests, `dotnet test` spawns additional `vstest` and `testhost` processes. This makes it difficult to automate the process of letting VS Code know which `dotnet` process to attach the debugger to. To solve this the startup hook will probe the process by name when it is loaded and output the process id of the correct process to attach. Thus VS Code will prompt the developer to select the correct process when debugging unit tests.
+1. **Debugging**: When you start debugging, the VS Code launch configuration will run the following steps / tasks
+   1. Build the solution in Docker
+   2. Build the debugger image (this step builds the startup hook and sets it up along with vsdbg inside the image)
+   3. Run the previously built project assembly inside its own container (debugger image)
+   4. Startup hook halts the process until the debugger attaches
+   5. Attach VS Code debugger to the correct dotnet process inside the debugger container
+   6. When debugger is detached, the startup hook will exit the app causing the container to stop and be removed
+2. **Startup Hook**: The `StartupHook` class in `StartupHooks/StartupHook.cs` initializes when the application starts. It identifies the entry assembly, writes the process ID to a file, and waits for a debugger to attach. A background thread monitors debugger detachment and shuts down the application if the debugger is detached.
+3. **Process Selection for Debugging**: For the typical console app or asp.net projects, there will only be one process with the name `dotnet` inside the container. Thus VS Code will identify this process to attach the debugger using the `"processName": "dotnet"` setting specified in the launch configuration. However for unit tests, `dotnet test` spawns additional `vstest` and `testhost` processes. Due to this there will usually be 3 processes with the process name set to `dotnet`. This makes it difficult to automate the process of letting VS Code know which `dotnet` process to attach the debugger to. To solve this, the startup hook will probe the corrent `testhost` process and output its process id and wait for the debugger to attach. VS Code will then prompt the developer to select the correct process when debugging unit tests (at which point the previously output process id is the correct one to select in order to start debugging).
 
 ## License
 
