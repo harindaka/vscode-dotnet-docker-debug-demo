@@ -88,5 +88,5 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## Acknowledgments
 
-- [Microsoft Documentation on Startup Hooks](https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/startup-hooks)
+- [Microsoft Documentation on Startup Hooks](https://github.com/dotnet/runtime/blob/main/docs/design/features/host-startup-hook.md)
 - [Docker Documentation](https://docs.docker.com/)
