@@ -32,7 +32,7 @@ This repository demonstrates how to debug .NET applications in VS Code using doc
 
 ### Prerequisites
 
-- [Docker](https://www.docker.com/)
+- [Docker](https://www.docker.com/) on a Windows Host
 - [Visual Studio Code](https://code.visualstudio.com/)
 
 ### Building the Solution
